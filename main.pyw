@@ -1,10 +1,8 @@
 import pygame
 
 from player import *
-from maze import load_maze_matrix, draw_maze
+from maze import *
 
-# maze setup
-maze_matrix = load_maze_matrix()
 
 # pygame setup
 pygame.init()
@@ -13,8 +11,12 @@ clock = pygame.time.Clock()
 running = True
 dt = 0
 
-player_pos = pygame.Vector2(screen.get_width() / 2, screen.get_height() / 2)
-player_pos_2 = pygame.Vector2(screen.get_width() / 2 + 50, screen.get_height() / 2)
+# maze setup
+maze_matrix = load_maze_matrix()
+
+# players setup
+player1_position = find_player1(pygame, maze_matrix)
+player2_position = find_player2(pygame, maze_matrix)
 
 while running:
     # poll for events
@@ -29,11 +31,9 @@ while running:
     # maze
     draw_maze(pygame, screen, maze_matrix)
 
-    pygame.draw.circle(screen, "red", player_pos, 40)
-    pygame.draw.circle(screen, "blue", player_pos_2, 40)
-
-    player_moviment(pygame, dt, player_pos)
-    player_moviment(pygame, dt, player_pos_2)
+    # player spawnpos
+    pygame.draw.circle(screen, "red", player1_position, 32)
+    pygame.draw.circle(screen, "blue", player2_position, 32)
 
     # draw sprites
     sprites = pygame.sprite.Group()

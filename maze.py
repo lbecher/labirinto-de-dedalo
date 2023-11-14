@@ -35,10 +35,16 @@ def draw_maze(pygame, screen, maze_matrix):
                 pygame.draw.circle(screen, "red", pos, final_tile_length / 2)
 
 # posição do fim do labirinto
-def end_maze(maze_matrix):
+def end_maze(pygame, maze_matrix):
     rows, columns = get_matrix_dimensions(maze_matrix)
     for i in range(0, rows):
         for j in range(0, columns):
             if maze_matrix[i][j] == 2:
-                end_position  = [i, j]
-    return end_position
+                maze_matrix[i][j] = 1
+                final_tile_length = TILE_LENGTH * TILE_SCALE
+                tile_center = final_tile_length / 2
+                x_len = (j * final_tile_length)
+                y_len = (i * final_tile_length)
+                x_pos, y_pos = x_len + tile_center, y_len + tile_center
+                return pygame.Vector2(x_pos, y_pos)
+    return None

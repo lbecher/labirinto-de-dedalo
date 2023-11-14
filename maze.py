@@ -33,3 +33,12 @@ def draw_maze(pygame, screen, maze_matrix):
                 pygame.draw.circle(screen, "blue", pos, final_tile_length / 2)
             elif maze_matrix[i][j] == 4:
                 pygame.draw.circle(screen, "red", pos, final_tile_length / 2)
+
+# posição do fim do labirinto
+def end_maze(maze_matrix):
+    rows, columns = get_matrix_dimensions(maze_matrix)
+    for i in range(0, rows):
+        for j in range(0, columns):
+            if maze_matrix[i][j] == 2:
+                end_position  = [i, j]
+    return end_position

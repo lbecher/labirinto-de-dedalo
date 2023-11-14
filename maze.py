@@ -28,6 +28,8 @@ def draw_maze(pygame, screen, maze_matrix):
             elif maze_matrix[i][j] == 1:
                 pygame.draw.circle(screen, "green", pos, final_tile_length / 2)
             elif maze_matrix[i][j] == 2:
-                pygame.draw.circle(screen, "orange", pos, final_tile_length / 2)
-            elif maze_matrix[i][j] == 3:
                 pygame.draw.circle(screen, "purple", pos, final_tile_length / 2)
+            elif maze_matrix[i][j] == 3:
+                pygame.draw.circle(screen, "blue", pos, final_tile_length / 2)
+            elif maze_matrix[i][j] == 4:
+                pygame.draw.circle(screen, "red", pos, final_tile_length / 2)

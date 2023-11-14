@@ -12,8 +12,7 @@ def find_player1(pygame, maze_matrix):
                 x_len = (j * final_tile_length)
                 y_len = (i * final_tile_length)
                 x_pos, y_pos = x_len + tile_center, y_len + tile_center
-                pos = pygame.Vector2(x_pos, y_pos)
-                return pygame.Vector2(i, j)
+                return pygame.Vector2(x_pos, y_pos)
     return None
 
 def find_player2(pygame, maze_matrix):
@@ -27,8 +26,7 @@ def find_player2(pygame, maze_matrix):
                 x_len = (j * final_tile_length)
                 y_len = (i * final_tile_length)
                 x_pos, y_pos = x_len + tile_center, y_len + tile_center
-                pos = pygame.Vector2(x_pos, y_pos)
-                return pygame.Vector2(i, j)
+                return pygame.Vector2(x_pos, y_pos)
     return None
 
 def player_moviment(pygame, dt, player_pos, ):

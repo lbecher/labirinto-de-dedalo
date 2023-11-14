@@ -1,5 +1,4 @@
 from constants import *
-from sprite import Sprite
 
 def load_maze_matrix():
     matrix = []

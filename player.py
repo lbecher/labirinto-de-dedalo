@@ -1,4 +1,3 @@
-import copy
 import pygame
 
 from constants import *

@@ -24,7 +24,7 @@ def astar(pygame, maze_matrix):
     player_astar.f = 0
 
     # posição final do labirinto para o calculo do nó
-    end_maze = end_maze(pygame, maze_matrix)
+    end_maze = find_maze_end(pygame, maze_matrix)
     end_maze.g = 0
     end_maze.h = 0
     end_maze.f = 0

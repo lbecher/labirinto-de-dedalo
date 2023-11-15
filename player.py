@@ -8,7 +8,7 @@ def is_valid_move(maze_matrix, i, j):
         return False
     return True
 
-def player1_keyboard_moviment(maze_matrix, maze_rows, maze_columns, i, j):
+def player1_keyboard_movement(maze_matrix, maze_rows, maze_columns, i, j):
     new_i = i
     new_j = j
 
@@ -36,7 +36,7 @@ def player1_keyboard_moviment(maze_matrix, maze_rows, maze_columns, i, j):
     
     return new_i, new_j
 
-def player2_keyboard_moviment(maze_matrix, maze_rows, maze_columns, i, j):
+def player2_keyboard_movement(maze_matrix, maze_rows, maze_columns, i, j):
     new_i = i
     new_j = j
 

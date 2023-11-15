@@ -38,10 +38,10 @@ while running:
     if use_ai:
         pass
     else:
-        player1_i, player1_j = player1_keyboard_moviment(dt, maze_matrix, maze_rows, maze_columns, player1_i, player1_j)
+        player1_i, player1_j = player1_keyboard_moviment(maze_matrix, maze_rows, maze_columns, player1_i, player1_j)
         player1_pygame_coordinates = maze_to_pygame_coordinates(player1_i, player1_j)
 
-        player2_i, player2_j = player2_keyboard_moviment(dt, maze_matrix, maze_rows, maze_columns, player2_i, player2_j)
+        player2_i, player2_j = player2_keyboard_moviment(maze_matrix, maze_rows, maze_columns, player2_i, player2_j)
         player2_pygame_coordinates = maze_to_pygame_coordinates(player2_i, player2_j)
     
     # desenha players

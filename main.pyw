@@ -1,11 +1,15 @@
 import pygame
 
+from game_mode import *
 from player import *
 from maze import *
 
+# modo de jogo
+use_ai = set_game_mode()
+
 # configurações do pygame
 pygame.init()
-screen = pygame.display.set_mode((1024, 720))
+screen = pygame.display.set_mode((640, 640))
 clock = pygame.time.Clock()
 running = True
 dt = 0
@@ -15,16 +19,16 @@ maze_matrix = load_maze_matrix()
 maze_rows, maze_columns = get_maze_matrix_dimensions(maze_matrix)
 
 while running:
-    # poll for events
-    # pygame.QUIT event means the user clicked X to close your window
+    # captura eventos
     for event in pygame.event.get():
+        # pygame.QUIT significa que a janela foi fechada
         if event.type == pygame.QUIT:
             running = False
 
-    # fill the screen with a color to wipe away anything from last frame
+    # preenche a tela com a cor preta, para limpar o frame anterior
     screen.fill("black")
 
-    # maze
+    # dezenha o labirinto
     draw_maze(screen, maze_matrix, maze_rows, maze_columns)
 
     # draw sprites

@@ -1,6 +1,6 @@
 import tkinter as tk
 
-use_ai = True
+use_ai = False
 
 def set_game_mode():
     select_game_mode()

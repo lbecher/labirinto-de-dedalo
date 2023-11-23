@@ -4,7 +4,8 @@ from game_mode import *
 from player import *
 from maze import *
 
-from limited_depth import calculate_limited_deph
+from a_star import calculate_a_star
+from limited_depth import calculate_limited_depth
 
 # modo de jogo
 use_ai = set_game_mode()
@@ -22,13 +23,13 @@ maze_rows, maze_columns = get_maze_matrix_dimensions(maze_matrix)
 #player1_i, player1_j = 0, 2
 #player2_i, player2_j = 0, 4
 player1_i, player1_j = find_player1(maze_matrix, maze_rows, maze_columns)
-#player2_i, player2_j = find_player2(maze_matrix, maze_rows, maze_columns)
+player2_i, player2_j = find_player2(maze_matrix, maze_rows, maze_columns)
 #end_i, end_j = 4, 2
 end_i, end_j = find_maze_end(maze_matrix, maze_rows, maze_columns)
 
 # se usar IA, calcular rotas de cada player
-player1_movement_stack = calculate_limited_deph(maze_matrix, end_i, end_j, player1_i, player1_j)
-#player2_movement_stack = calculate_limited_deph(maze_matrix, end_i, end_j, player2_i, player2_j)
+player1_movement_stack = calculate_limited_depth(maze_matrix, end_i, end_j, player1_i, player1_j)
+player2_movement_stack = calculate_a_star(maze_matrix, end_i, end_j, player2_i, player2_j)
 
 # loop principal do jogo
 while running:

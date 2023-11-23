@@ -1,18 +1,28 @@
 from player import *
 from maze import *
 
-def astar(pygame, maze_matrix):
-    # maze setup
-    maze_matrix_search = load_maze_matrix()
+# inicia os valores de g,h,f & define posição e parent
+class AStarCell:
+    def __init__(self, parent=None, position=None):
+        self.parent = parent
+        self.position = position
 
+        self.g = 0
+        self.h = 0
+        self.f = 0
+
+    def __eq__(self, other):
+        return self.position == other
+
+def calculate_a_star(maze_matrix, end_i, end_j, player2_i, player2_j):
     # posição inicial do player para calcula do nó
-    player_astar = find_player1(pygame, maze_matrix)
+    player_astar = AStarCell(position=(player2_i, player2_j))
     player_astar.g = 0
     player_astar.h = 0
     player_astar.f = 0
 
     # posição final do labirinto para o calculo do nó
-    end_maze = find_maze_end(pygame, maze_matrix)
+    end_maze = AStarCell(position=(end_i, end_j))
     end_maze.g = 0
     end_maze.h = 0
     end_maze.f = 0
@@ -64,24 +74,26 @@ def astar(pygame, maze_matrix):
             # laço que tenta gerar vizinhos nas 8 posições adjasentes 
             for new_position in [(0, 1), (0, -1), (1, 0), (-1, 0), (1, 1), (1, -1), (-1, -1), (-1, 1)]:
                 # posição atual do player somando o valor atual com o deslocamento
-                player_position = (current_position.postion[0] + new_position[0], current_position.position[1] + new_position[1])
+                player_position = (current_position.position[0] + new_position[0], current_position.position[1] + new_position[1])
 
                 # verifica se esta nas proximidades do player
-                if (player_position[0] > (len(maze_matrix_search) - 1) 
+                if (player_position[0] > (len(maze_matrix) - 1) 
                     or player_position[0] < 0 
-                    or player_position[1] > (len(maze_matrix_search[0]) - 1)  # Ajuste aqui
+                    or player_position[1] > (len(maze_matrix[0]) - 1)  # Ajuste aqui
                     or player_position[1] < 0):
                     continue
 
                 # verifica se é possivel percorrer essa posição da matriz
-                if maze_matrix_search[player_position[0]][player_position[1]] != 1:
+                if maze_matrix[player_position[0]][player_position[1]] != 1:
                     continue
 
                 # nova posição possivel
                 next_position = (current_position, player_position)
 
+                sla = AStarCell(position=new_position)
+
                 # adiciona a posição na lista de visinhos
-                neighborhood.append(next_position)
+                neighborhood.append(sla)
 
             # Procura em toda visinhaça
             for neighbor in neighborhood:
@@ -91,14 +103,16 @@ def astar(pygame, maze_matrix):
                         continue
 
                 # Calcula os valores de f, g, h
-                neighbor.g = current_position.g +1
+                neighbor.g = current_position.g + 1
                 neighbor.h = ((neighbor.position[0] - end_maze.position[0]) ** 2)
                 neighbor.f = neighbor.g + neighbor.h
 
                 # se o caminho esta na lista e o caminho é maior que o onterior, o visinho não e adicionado na lista
-                for open_position in open_list:
-                    if neighbor == open_position and neighbor.g > open_position:
+                for open in open_list:
+                    if neighbor == open and neighbor.g > open.g:
                         continue
 
                 # coloca visinho na lista aberta
                 open_list.append(neighbor)
+    
+    return None

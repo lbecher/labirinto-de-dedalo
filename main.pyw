@@ -30,7 +30,7 @@ end_i, end_j = find_maze_end(maze_matrix, maze_rows, maze_columns)
 # se usar IA, calcular rotas de cada player
 player1_movement_stack = calculate_limited_depth(maze_matrix, end_i, end_j, player1_i, player1_j)
 player2_movement_stack = calculate_a_star(maze_matrix, end_i, end_j, player2_i, player2_j)
-
+print(player2_movement_stack)
 # loop principal do jogo
 while running:
     # captura eventos

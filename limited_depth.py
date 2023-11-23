@@ -49,7 +49,7 @@ def obter_vizinhos(labirinto, posicao):
 
 # Exemplo de uso
 def calculate_limited_depth(maze_matrix, end_i, end_j, player2_i, player2_j):
-    limite_exemplo = 1
+    limite_exemplo = 30
 
     caminho_encontrado = busca_profundidade_limitada(maze_matrix, (player2_i, player2_j), limite_exemplo)
     while caminho_encontrado is None:

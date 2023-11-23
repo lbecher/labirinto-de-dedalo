@@ -56,6 +56,11 @@ def calculate_a_star(maze_matrix, end_i, end_j, player2_i, player2_j):
         if current_position == end_maze:
             # inicia lista do caminho
             path = []
+            for i in open_list:
+                path.append(i.position)
+            return path
+            '''
+            path = []
             # cria uma variavel para evitar que mudanças na execução alterem a lista
             current = current_position
 
@@ -64,7 +69,9 @@ def calculate_a_star(maze_matrix, end_i, end_j, player2_i, player2_j):
                 path.append(current.position)
                 current = current.parent
                 # inverte a lista para retornala
-                return list(reversed(path))
+                print("A*=")
+                print(path)
+                return list(reversed(path))'''
 
         # posição atual não é destino
         else:
@@ -74,8 +81,12 @@ def calculate_a_star(maze_matrix, end_i, end_j, player2_i, player2_j):
             # laço que tenta gerar vizinhos nas 8 posições adjasentes 
             for new_position in [(0, 1), (0, -1), (1, 0), (-1, 0), (1, 1), (1, -1), (-1, -1), (-1, 1)]:
                 # posição atual do player somando o valor atual com o deslocamento
-                player_position = (current_position.position[0] + new_position[0], current_position.position[1] + new_position[1])
+                #player_position = (current_position.position[0] + new_position[0], current_position.position[1] + new_position[1])
 
+                if current_position.position is not None:
+                    player_position = (current_position.position[0] + new_position[0], current_position.position[1] + new_position[1])
+                else:
+                    continue
                 # verifica se esta nas proximidades do player
                 if (player_position[0] > (len(maze_matrix) - 1) 
                     or player_position[0] < 0 
@@ -90,29 +101,31 @@ def calculate_a_star(maze_matrix, end_i, end_j, player2_i, player2_j):
                 # nova posição possivel
                 next_position = (current_position, player_position)
 
-                sla = AStarCell(position=new_position)
+                sla = AStarCell(parent=current_position)
 
                 # adiciona a posição na lista de visinhos
                 neighborhood.append(sla)
 
-            # Procura em toda visinhaça
+            # Procura em toda vizinhança
             for neighbor in neighborhood:
-                # visinhos que estão na lista fechada
-                for closed_neighbor in closed_list:
-                    if neighbor == closed_neighbor:
-                        continue
+                # vizinhos que estão na lista fechada
+                if neighbor in closed_list:
+                    continue
 
                 # Calcula os valores de f, g, h
                 neighbor.g = current_position.g + 1
-                neighbor.h = ((neighbor.position[0] - end_maze.position[0]) ** 2)
+                if neighbor.position is not None and end_maze.position is not None:
+                    neighbor.h = ((neighbor.position[0] - end_maze.position[0]) ** 2)
+                else:
+                    neighbor.h = 0  
+                #neighbor.h = ((neighbor.position[0] - end_maze.position[0]) ** 2)
                 neighbor.f = neighbor.g + neighbor.h
 
-                # se o caminho esta na lista e o caminho é maior que o onterior, o visinho não e adicionado na lista
-                for open in open_list:
-                    if neighbor == open and neighbor.g > open.g:
-                        continue
+                # se o caminho está na lista e o caminho é maior que o anterior, o vizinho não é adicionado na lista
+                if neighbor in open_list and neighbor.g > open_list[open_list.index(neighbor)].g:
+                    continue
 
-                # coloca visinho na lista aberta
+                # coloca vizinho na lista aberta
                 open_list.append(neighbor)
     
     return None

@@ -65,12 +65,10 @@ def astar(pygame, maze_matrix):
             while current is not None:
                 path.append(current.position)
                 current = current.parent
-                # inverte a lista para retornala
                 return list(reversed(path))
 
         # posição atual não é destino
         else:
-            # lista para vizinhos 
             neighborhood = []
             
             # laço que tenta gerar vizinhos nas 8 posições adjasentes 
@@ -97,7 +95,6 @@ def astar(pygame, maze_matrix):
 
             # Procura em toda visinhaça
             for neighbor in neighborhood:
-                # visinhos que estão na lista fechada
                 for closed_neighbor in closed_list:
                     if neighbor == closed_neighbor:
                         continue

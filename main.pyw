@@ -30,7 +30,11 @@ end_i, end_j = find_maze_end(maze_matrix, maze_rows, maze_columns)
 # se usar IA, calcular rotas de cada player
 player1_movement_stack = calculate_limited_depth(maze_matrix, end_i, end_j, player1_i, player1_j)
 player2_movement_stack = calculate_a_star(maze_matrix, end_i, end_j, player2_i, player2_j)
-print(player2_movement_stack)
+#print(player1_movement_stack)
+print("Caminho encontrado(A*) =", player2_movement_stack)
+
+a = 0
+l = 0
 # loop principal do jogo
 while running:
     # captura eventos
@@ -45,13 +49,35 @@ while running:
     # dezenha o labirinto
     draw_maze(screen, maze_matrix, maze_rows, maze_columns)
 
+   
     # movementa players
     if True:
-        (player1_i, player1_j) = player1_movement_stack.pop()
-        player1_pygame_coordinates = maze_to_pygame_coordinates(player1_i, player1_j)
+        try:
+            (player1_i, player1_j) = player1_movement_stack.pop()
+            player1_pygame_coordinates = maze_to_pygame_coordinates(player1_i, player1_j)
+        except Exception as e:
+            if (l == 0):
+                print("Lista caminho encontrado(Limited_depth) esta vazia!")
+            l = l + 1
+        
+        try:
+            (player2_i, player2_j) = player2_movement_stack.pop()
+            player2_pygame_coordinates = maze_to_pygame_coordinates(player2_i, player2_j)
+        except Exception as e:
+            if (a == 0):
+                print("Lista caminho encontrado(A*) esta vazia!")
+            a = a + 1
 
-        #(player2_i, player2_j) = player2_movement_stack.pop()
-        #player2_pygame_coordinates = maze_to_pygame_coordinates(player2_i, player2_j)
+        if (a != 0) and (l != 0) and (a > l):
+            print("Vitoria A*")
+            break
+        if (a != 0) and (l != 0) and (l > a):
+            print("Vitoria Limited_depth")
+            break
+        if (a != 0) and (l != 0) and (a == l):
+            print("Empate")
+            break
+
     else:
         player1_i, player1_j = player1_keyboard_movement(maze_matrix, maze_rows, maze_columns, player1_i, player1_j)
         player1_pygame_coordinates = maze_to_pygame_coordinates(player1_i, player1_j)
@@ -61,7 +87,7 @@ while running:
     
     # desenha players
     pygame.draw.circle(screen, "red", player1_pygame_coordinates, 32)
-    #pygame.draw.circle(screen, "blue", player2_pygame_coordinates, 32)
+    pygame.draw.circle(screen, "blue", player2_pygame_coordinates, 32)
 
     # flip() the display to put your work on screen
     pygame.display.flip()

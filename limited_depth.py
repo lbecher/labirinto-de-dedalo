@@ -58,7 +58,7 @@ def calculate_limited_depth(maze_matrix, end_i, end_j, player2_i, player2_j):
         caminho_encontrado = busca_profundidade_limitada(maze_matrix, (player2_i, player2_j), limite_exemplo)
 
     if caminho_encontrado:
-        print("Caminho encontrado:", caminho_encontrado)
+        print("Caminho encontrado(limited_depth):", caminho_encontrado)
     else:
         print("Nenhum caminho encontrado mesmo após várias tentativas.")
 

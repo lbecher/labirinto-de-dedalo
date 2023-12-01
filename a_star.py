@@ -1,6 +1,5 @@
 import math
 
-# ... início do código
 class AStarNode:
     def __init__(self, parent=None, position=None):
         self.parent = parent
@@ -29,7 +28,7 @@ def calcula_aStar(maze_matrix, end_i, end_j, player2_i, player2_j):
     # faça uma lista fechada vazia
     closed_list = []
     
-
+    # enquanto o nó de destino não for alcançado
     while open_list:
         current_node = min(open_list, key=lambda x: x.f)
         open_list.remove(current_node)
@@ -69,5 +68,3 @@ def calcula_aStar(maze_matrix, end_i, end_j, player2_i, player2_j):
                     adjacent_node.parent = current_node
 
     return None
-
-# ... fim do código

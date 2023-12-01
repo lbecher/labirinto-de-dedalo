@@ -29,12 +29,15 @@ end_i, end_j = find_maze_end(maze_matrix, maze_rows, maze_columns)
 
 # se usar IA, calcular rotas de cada player
 player1_movement_stack = calculate_limited_depth(maze_matrix, end_i, end_j, player1_i, player1_j)
+player1_movement_stack_erro = calculate_limited_depth(maze_matrix, end_i, end_j, player1_i, player1_j)
 player2_movement_stack = calculate_a_star(maze_matrix, end_i, end_j, player2_i, player2_j)
 #print(player1_movement_stack)
-print("Caminho encontrado(A*) =", player2_movement_stack)
+print("Caminho encontrado(A*) =", list(reversed(player2_movement_stack)))
 
 a = 0
 l = 0
+
+
 # loop principal do jogo
 while running:
     # captura eventos
@@ -58,6 +61,7 @@ while running:
         except Exception as e:
             if (l == 0):
                 print("Lista caminho encontrado(Limited_depth) esta vazia!")
+
             l = l + 1
         
         try:
@@ -66,17 +70,12 @@ while running:
         except Exception as e:
             if (a == 0):
                 print("Lista caminho encontrado(A*) esta vazia!")
+            
             a = a + 1
 
-        if (a != 0) and (l != 0) and (a > l):
-            print("Vitoria A*")
+        if (player1_movement_stack == []) and (player2_movement_stack == []): 
             break
-        if (a != 0) and (l != 0) and (l > a):
-            print("Vitoria Limited_depth")
-            break
-        if (a != 0) and (l != 0) and (a == l):
-            print("Empate")
-            break
+            
 
     else:
         player1_i, player1_j = player1_keyboard_movement(maze_matrix, maze_rows, maze_columns, player1_i, player1_j)
@@ -95,6 +94,6 @@ while running:
     # limits FPS to 60
     # dt is delta time in seconds since last frame, used for framerate-
     # independent physics.
-    dt = clock.tick(5) / 1000
+    dt = clock.tick(10) / 1000
 
 pygame.quit()

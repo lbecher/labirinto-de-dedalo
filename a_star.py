@@ -1,3 +1,4 @@
+from constants import ASTAR_MOV
 class AStarNode:
     def __init__(self, parent=None, position=None):
         self.parent = parent
@@ -38,7 +39,7 @@ def calculate_a_star(maze_matrix, end_i, end_j, player2_i, player2_j):
     closed_list = []
     
     # Exeção a regra do A* para que não se possa andar na diagonal no labirinto
-    teste_movimento = False
+    teste_movimento = ASTAR_MOV
     if teste_movimento == True:
         movement = [(0, 1), (0, -1), (1, 0), (-1, 0), (1, 1), (1, -1), (-1, -1), (-1, 1)]
     else:
@@ -88,7 +89,7 @@ def calculate_a_star(maze_matrix, end_i, end_j, player2_i, player2_j):
                             in_open_list = True
                             break
 
-                    # Se o nó não esta na lista fechada nem na lista fechada
+                    # Se o nó não esta na lista fechada nem na lista aberta
                     if  (in_closed_list == False) and (in_open_list == False):
                         open_list.append(adjacent_node)
                         adjacent_node.parent = current_node

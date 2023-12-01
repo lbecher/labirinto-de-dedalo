@@ -12,10 +12,15 @@ use_ai = set_game_mode()
 
 # configurações do pygame
 pygame.init()
-screen = pygame.display.set_mode((640, 640))
+# o tamanho do display importa, ele define o que aperece do labirinto, labirinto 21 por 12
+screen = pygame.display.set_mode((1344, 768))
 clock = pygame.time.Clock()
 running = True
-dt = 0
+dt = None
+
+# Mensagem para finalizar programa
+a = 0
+l = 0
 
 # configurações do labirinto
 maze_matrix = load_maze_matrix()
@@ -34,10 +39,6 @@ player2_movement_stack = calculate_a_star(maze_matrix, end_i, end_j, player2_i, 
 #print(player1_movement_stack)
 print("Caminho encontrado(A*) =", list(reversed(player2_movement_stack)))
 
-a = 0
-l = 0
-
-
 # loop principal do jogo
 while running:
     # captura eventos
@@ -52,37 +53,26 @@ while running:
     # dezenha o labirinto
     draw_maze(screen, maze_matrix, maze_rows, maze_columns)
 
-   
     # movementa players
-    if True:
-        try:
-            (player1_i, player1_j) = player1_movement_stack.pop()
-            player1_pygame_coordinates = maze_to_pygame_coordinates(player1_i, player1_j)
-        except Exception as e:
-            if (l == 0):
-                print("Lista caminho encontrado(Limited_depth) esta vazia!")
-
-            l = l + 1
-        
-        try:
-            (player2_i, player2_j) = player2_movement_stack.pop()
-            player2_pygame_coordinates = maze_to_pygame_coordinates(player2_i, player2_j)
-        except Exception as e:
-            if (a == 0):
-                print("Lista caminho encontrado(A*) esta vazia!")
-            
-            a = a + 1
-
-        if (player1_movement_stack == []) and (player2_movement_stack == []): 
-            break
-            
-
-    else:
-        player1_i, player1_j = player1_keyboard_movement(maze_matrix, maze_rows, maze_columns, player1_i, player1_j)
+    try:
+        (player1_i, player1_j) = player1_movement_stack.pop()
         player1_pygame_coordinates = maze_to_pygame_coordinates(player1_i, player1_j)
-
-        player2_i, player2_j = player2_keyboard_movement(maze_matrix, maze_rows, maze_columns, player2_i, player2_j)
+    except Exception as e:
+        if (l == 0):
+            print("Lista caminho encontrado(Limited_depth) esta vazia!")
+        l = l + 1
+    
+    try:
+        (player2_i, player2_j) = player2_movement_stack.pop()
         player2_pygame_coordinates = maze_to_pygame_coordinates(player2_i, player2_j)
+    except Exception as e:
+        if (a == 0):
+            print("Lista caminho encontrado(A*) esta vazia!")
+        a = a + 1 
+
+    if (player1_movement_stack == []) and (player2_movement_stack == []): 
+        break
+
     
     # desenha players
     pygame.draw.circle(screen, "red", player1_pygame_coordinates, 32)
@@ -94,6 +84,6 @@ while running:
     # limits FPS to 60
     # dt is delta time in seconds since last frame, used for framerate-
     # independent physics.
-    dt = clock.tick(10) / 1000
+    dt = clock.tick(TICK_TIME) / 1000
 
 pygame.quit()
